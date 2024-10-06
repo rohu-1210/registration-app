@@ -1,0 +1,43 @@
+pipeline {
+    agent {
+        label 'jenkins-agent'
+    }
+tools {
+   jdk 'java-new'
+   maven 'maven-new'
+}
+
+stages {
+    stage ('clean up workspace'){
+        steps {
+            cleanWs()
+        }      
+}
+    stage ('checkout from SCM'){
+        steps {
+            git branch: 'main', credentialsId: 'github', url: 'https://github.com/rohu-1210/registration-app.git'
+        }      
+}
+    stage ('build application'){
+        steps {
+            sh '''
+             mvn clean package
+            '''
+        }      
+}
+    stage ('test application'){
+        steps {
+            sh '''
+             mvn test
+            '''
+        }      
+}
+    stage ('test application'){
+        steps {
+            sh '''
+             mvn test
+            '''
+        }      
+}
+}
+}
